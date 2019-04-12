@@ -217,6 +217,12 @@ input:focus {
     padding-top: 100px;
 }
 
+@media (min-width: 992px) {
+    .login--reduce {
+        padding-top: 70px;
+    }
+}
+
 .login__inner {
     min-height: calc(100vh - 188px);
     display: flex;
