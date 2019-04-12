@@ -17,7 +17,7 @@ btnCloseTransaction.forEach(btn => {
 });
 /* END MODAL FOR VIEWING TRANSACTIONS */
 
-/* CONFIRMATION MODAL FOR  DELETING A TRANSACTION*/
+/* CONFIRMATION MODAL FOR DELETING AN ACCOUNT*/
 const btnDeleteTransaction = document.querySelector('.transaction__item__delete');
 
 btnDeleteTransaction.onclick = () => {
@@ -30,4 +30,19 @@ const btnCancelDelete = document.querySelector('.transaction__delete__cancel');
 btnCancelDelete.onclick = () => {
     (btnCancelDelete.closest(".modal").style.display = "none");
 };
-/* END CONFIRMATION MODAL FOR  DELETING A TRANSACTION*/
+/* END CONFIRMATION MODAL FOR DELETING AN ACCOUNT*/
+
+/* MODAL FOR DEBITING/CREDITING A USER ACCOUNT*/
+const btnCreditDebit = document.querySelector('.credit-debit');
+
+btnCreditDebit.onclick = () => {
+        let modal = btnCreditDebit.getAttribute("data-modal");
+        document.getElementById(modal).style.display = "block";
+}
+
+const btnCancelCredDeb = document.querySelector('.cancel-debit-credit');
+
+btnCancelCredDeb.onclick = () => {
+    (btnCancelCredDeb.closest(".modal").style.display = "none");
+};
+/* END MODAL FOR DEBITING/CREDITING A USER ACCOUNT*/
