@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="descrition" content="Banka is a light-weight core banking application that powers banking operations like account
+	creation, customer deposit and withdrawals. This app is meant to support a single bank, where
+	users can signup and create bank accounts online, but must visit the branch to withdraw or
+	deposit money">
+    <meta name="keywords" content="banka, banking, bank, deposit, withdrawals, accounts, money">
+    <meta name="loginor" content="Ileriayo Adebiyi">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>New Manager</title>
+    <link rel="stylesheet" href="../../css/style.css">
+</head>
+
+<body>
+    <header>
+        <div class="navbar navbar--color">
+            <div class="container">
+                <div class="navbar__inner">
+                    <a href="index.html" class="navbar__logo">Banka</a>
+                    <nav class="navbar__menu">
+                        <ul>
+                            <li><a href="#">Sign Out</a></li>
+                        </ul>
+                    </nav>
+                    <div class="navbar__menu-mobile">
+                        <a href="" id='toggle'>
+                            <svg role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+                                <path fill="currentColor"
+                                    d="M16 132h416c8.837 0 16-7.163 16-16V76c0-8.837-7.163-16-16-16H16C7.163 60 0 67.163 0 76v40c0 8.837 7.163 16 16 16zm0 160h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16zm0 160h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16z">
+                                </path>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div class="login login--reduce">
+            <div class="container">
+                <div class="login__inner">
+                    <div class="login__img">
+                        <img src="../../img/team.svg">
+                    </div>
+                    <div class="login__login">
+                        <h1 class="login__title">Create A New Admin/Staff</h1>
+                        <form method='post' action="#">
+                            <label>Manager</label>
+                            <Select>
+                                <option value="">Admin</option>
+                                <option value="">Staff</option>
+                            </Select>
+                            <label>First Name</label>
+                            <input type="text" name="fname" id="fname" placeholder="First Name">
+                            <label>Last Name</label>
+                            <input type="text" name="lname" id="lname" placeholder="Last Name">
+                            <label>Date of Birth</label>
+                            <input type="date" name="dob" id='lname' placeholder="">
+                            <button type='submit' class="button button--deep-violet">Create</button>
+                            <a href="">
+                                <h6 class="go-back">Ignore and go back</h6>
+                            </a>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
+
+</html>
