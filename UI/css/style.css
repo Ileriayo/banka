@@ -1,0 +1,152 @@
+/************************* START GLOBALS *************************/
+body {
+    font: 20px "Segoe UI", Arial, Helvetica, sans-serif;
+    margin: 0;
+}
+
+html {
+    box-sizing: border-box;
+    background-color: #ffffff;
+}
+
+*,
+*:before,
+*:after {
+    box-sizing: inherit;
+}
+
+.container {
+    width: 88%;
+    max-width: 1080px;
+    margin: 0 auto;
+    position: relative;
+}
+
+a {
+    outline: 0;
+    text-decoration: none;
+    color: inherit;
+}
+
+img,
+svg {
+    max-width: 100%;
+}
+
+/************************* END GLOBALS *************************/
+
+/************************* START HEADER *************************/
+.navbar {
+    position: fixed;
+    z-index: 100;
+    width: 100%;
+}
+
+.navbar__logo {
+    font-size: 2.5rem;
+    transition: 0;
+    color: #fff;
+    text-decoration: none;
+}
+
+.navbar__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 80px;
+    color: #fff;
+}
+
+.navbar__menu {
+    display: none;
+}
+
+@media (min-width: 992px) {
+    .navbar__menu {
+        display: block;
+    }
+}
+
+.navbar__menu li {
+    margin-left: 4pt;
+    display: inline-block;
+}
+
+@media (min-width: 992px) {
+    .navbar__menu li {
+        margin-left: 16pt;
+    }
+}
+
+.navbar__menu a {
+    color: #fff;
+}
+
+@media (min-width: 992px) {
+    .navbar__menu-mobile {
+        display: none;
+    }
+}
+
+#toggle svg {
+    height: 1.2em;
+    width: 1.2em;
+    vertical-align: middle;
+}
+
+/************************* END HEADER *************************/
+
+/************************* START HERO *************************/
+.hero {
+    position: relative;
+    width: 100%;
+    background-image: url("../img/laptop_on_table.jpeg");
+    box-shadow: 0 4px 11px rgba(124, 146, 169, 0.5);
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    color: #ffffff;
+}
+
+.hero__z-index-one {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    opacity: 0.91;
+    z-index: 1;
+    background-color: #473198;
+}
+
+.hero__z-index-one--gradient {
+    background: linear-gradient(to right, #473198, #4641ff);
+}
+
+.hero__z-index-two {
+    position: relative;
+    z-index: 2;
+}
+
+.hero__body {
+    display: flex;
+    align-items: center;
+    min-height: calc(100vh);
+    padding: calc(92px) 0;
+    overflow: auto;
+}
+
+.hero__body__items {
+    width: 100%;
+    text-align: center;
+}
+
+.hero__title {
+    font-size: 3rem;
+}
+
+.hero__desc {
+    opacity: 0.85;
+    line-height: 1.7;
+    font-size: 1.5rem;
+}
+
+/************************* END HERO *************************/
