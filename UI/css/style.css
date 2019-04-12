@@ -95,11 +95,6 @@ input:focus, select:focus {
     color: #fff;
 }
 
-.button--small {
-    border-radius: 3px;
-    padding: pt 1pt;
-}
-
 .left-align {
     text-align: left;
 }
