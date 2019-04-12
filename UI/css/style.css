@@ -1,7 +1,8 @@
 /************************* START GLOBALS *************************/
 body {
-    font: 20px "Segoe UI", Arial, Helvetica, sans-serif;
+    font-family: "Segoe UI", Arial, Helvetica, sans-serif;
     margin: 0;
+    color: #666;
 }
 
 html {
@@ -28,9 +29,65 @@ a {
     color: inherit;
 }
 
-img,
-svg {
-    max-width: 100%;
+img {
+    max-width: 90%;
+}
+
+label {
+    margin-bottom: 2pt;
+    display: block;
+    text-align: left;
+    font-size: 0.9em;
+    padding-left: 10pt;
+}
+
+h1 {
+    font-weight: 400;
+}
+
+input {
+    outline: none;
+    appearance: none;
+    border: 1px solid #eee;
+    width: 100%;
+    transition: 0.7s;
+    color: #111;
+    font: 15px "Segoe UI";
+    font-weight: 500;
+    padding: 10pt 20pt;
+    border-radius: 30px;
+    background-color: #f7f7f7;
+    margin-bottom: 1.4em;
+    display: block;
+}
+
+input:focus {
+    border-color: #473198;
+    outline: 0;
+    background-color: #ffffff;
+}
+
+.button {
+    border-radius: 30px;
+    padding: 10pt 20pt;
+    border: 1px solid #473198;
+    cursor: pointer;
+    background-color: transparent;
+    color: inherit;
+}
+
+.button--deep-violet {
+    background-color: #4A0D67;
+    border: 1px solid #4A0D67;
+    color: #fff;
+}
+
+.left-align {
+    text-align: left;
+}
+
+.right-align {
+    text-align: right;
 }
 
 /************************* END GLOBALS *************************/
@@ -40,6 +97,10 @@ svg {
     position: fixed;
     z-index: 100;
     width: 100%;
+}
+
+.navbar--color {
+    background-color: #473198;
 }
 
 .navbar__logo {
@@ -150,3 +211,57 @@ svg {
 }
 
 /************************* END HERO *************************/
+
+/************************* START LOGIN *************************/
+.login {
+    padding-top: 100px;
+}
+
+.login__inner {
+    min-height: calc(100vh - 188px);
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+@media (min-width: 992px) {
+    .login__inner {
+        flex-direction: row;
+    }
+}
+
+@media (min-width: 992px) {
+    .login__img {
+        width: 50%;
+    }
+}
+
+@media (min-width: 600px) {
+
+    .login__img img {
+        max-height: 300px;
+    }
+}
+
+@media (min-width: 992px) {
+
+    .login__img img {
+        max-height: 400px;
+    }
+}
+
+.login__login {
+    text-align: center;
+}
+
+@media (min-width: 992px) {
+    .login__login {
+        width: 50%;
+    }
+}
+
+.login__title {
+    color: #111;
+}
+
+/************************* END LOGIN *************************/
