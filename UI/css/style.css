@@ -95,12 +95,28 @@ input:focus, select:focus {
     color: #fff;
 }
 
+.button--tomato {
+    background-color: tomato;
+    border: 1px solid tomato;
+    color: #fff;
+}
+
+.button--red {
+    background-color: red;
+    border: 1px solid red;
+    color: #fff;
+}
+
 .left-align {
     text-align: left;
 }
 
 .right-align {
     text-align: right;
+}
+
+.go-back::before {
+    content: '<<';
 }
 
 /************************* END GLOBALS *************************/
@@ -328,8 +344,6 @@ input:focus, select:focus {
     .vertical-menu {
         display: inline-block;
         border-bottom: none;
-        /* background-color: #ddcccc31; */
-        /* box-shadow: 0.7px 0 rgba(210, 207, 219, 0.5); */
     }
 }
 
@@ -348,16 +362,16 @@ input:focus, select:focus {
     }
 }
 
-.vertical-menu--active {
-    color: #473198;
-    font-size: 1.2rem;
-    font-weight: 500;
-}
-
 .vertical-menu a:hover {
     opacity: 1;
     color: #473198;
     border-bottom: 1px solid #473198;
+}
+
+.vertical-menu--active {
+    color: #473198;
+    font-size: 1.2rem;
+    font-weight: 500;
 }
 
 /************************* END TRANSACT *************************/
