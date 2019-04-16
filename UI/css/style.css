@@ -10,6 +10,14 @@ html {
     background-color: #ffffff;
 }
 
+.inline {
+    display: inline;
+}
+
+#close-modal {
+    float: right;
+}
+
 *,
 *:before,
 *:after {
@@ -21,6 +29,15 @@ html {
     max-width: 1080px;
     margin: 0 auto;
     position: relative;
+}
+
+@media (width: 375px) and (height: 812px) {
+    .container {
+        width: 80%;
+        max-width: 100%;
+        margin: 0 10px;
+        position: relative;
+    }
 }
 
 a {
@@ -56,9 +73,10 @@ select {
     background-repeat: no-repeat;
     background-position: 94%;
     background-size: 1em;
-  }
+}
 
-input, select {
+input,
+select {
     outline: none;
     appearance: none;
     border: 1px solid #eee;
@@ -74,7 +92,8 @@ input, select {
     display: block;
 }
 
-input:focus, select:focus {
+input:focus,
+select:focus {
     border-color: #473198;
     outline: 0;
     background-color: #ffffff;
@@ -82,16 +101,20 @@ input:focus, select:focus {
 
 .button {
     border-radius: 30px;
-    padding: 10pt 20pt;
+    padding: 5pt 10pt;
     border: 1px solid #473198;
     cursor: pointer;
     background-color: transparent;
     outline: none;
 }
 
+.close-button {
+    padding: 15px;
+}
+
 .button--deep-violet {
-    background-color: #4A0D67;
-    border: 1px solid #4A0D67;
+    background-color: #473198;
+    border: 1px solid #473198;
     color: #fff;
 }
 
@@ -145,6 +168,13 @@ input:focus, select:focus {
     justify-content: space-between;
     height: 80px;
     color: #fff;
+}
+
+@media (width: 375px) and (height: 812px) {
+
+    .navbar__inner {
+        width: 115%;
+    }
 }
 
 .navbar__menu {
@@ -393,7 +423,7 @@ input:focus, select:focus {
 
 @media (min-width: 992px) {
     .transaction {
-        min-width: 450px;
+        min-width: 30%;
     }
 }
 
@@ -411,27 +441,154 @@ input:focus, select:focus {
     bottom: 0;
     left: 0;
     right: 0;
-    z-index: 1;
-    background: rgba(0, 0, 0, 0.5);
+    z-index: 6;
+    background: rgba(0, 0, 0, 0.8);
     display: none;
 }
 
 .modal__content {
     background: #fff;
-    width: 90%;
+    max-width: 20%;
+    /* min-width: 10%; */
     border-radius: 6px;
     position: relative;
-    top: 20%;
-    left: 5%;
+    top: 30%;
+    left: 37%;
+    padding: 1.5em;
 }
 
-@media (min-width: 992px) {
+@media (max-width: 768px) {
     .modal__content {
-        background: #fff;
-        width: 40%;
-        border-radius: 6px;
-        position: relative;
-        top: 20%;
-        left: 27%;
+        max-width: 60%;
+        left: 24%;
     }
 }
+@media (min-width: 1024px) {
+    .modal__content {
+        max-width: 30%;
+    }
+}
+
+.modal-item div:nth-child(odd) {
+    background: #d2d0ff;
+}
+
+/********** START TABLE ************/
+.table-container {
+    display: block;
+    margin: 2em auto;
+    width: 100%;
+    max-width: 900px;
+}
+
+@media (width: 375px) and (height: 812px) {
+    .table-container {
+        width: 120%;
+    }
+}
+
+@media (min-width: 1271px) {
+    .table-container {
+        width: 200%;
+    }
+}
+
+.flex-table {
+    display: flex;
+    flex-flow: row;
+    border-left: solid 1px #d9d9d9;
+    transition: 0.5s;
+}
+
+.flex-table:first-of-type {
+    border-top: solid 1px #473198;
+    border-left: solid 1px #473198;
+}
+
+.flex-table:first-of-type .flex-row {
+    background: #473198;
+    color: white;
+    border-color: #473198;
+}
+
+.flex-table.row:nth-child(odd) .flex-row {
+    background: #d2d0ff;
+}
+
+.flex-table:hover {
+    background: #F5F5F5;
+    transition: 500ms;
+}
+
+.flex-row {
+    width: calc(100% / 4);
+    text-align: center;
+    padding: 0.5em 0.5em;
+    border-right: solid 1px #d9d9d9;
+    border-bottom: solid 1px #d9d9d9;
+}
+
+.column .flex-row {
+    display: flex;
+    flex-flow: row wrap;
+    width: 100%;
+    padding: 0;
+    border: 0;
+    border-bottom: solid 1px #d9d9d9;
+}
+
+.column .flex-row:hover {
+    background: #F5F5F5;
+    transition: 500ms;
+}
+
+@media all and (max-width: 767px) {
+    .flex-row {
+        width: calc(100% / 3);
+    }
+
+    .flex-row.first {
+        width: 100%;
+    }
+
+    .column {
+        width: 100%;
+    }
+}
+
+@media all and (max-width: 430px) {
+    .flex-table .flex-row {
+        border-bottom: 0;
+    }
+
+    .flex-table .flex-row:last-of-type {
+        border-bottom: solid 1px #d9d9d9;
+    }
+
+    .header .flex-row {
+        border-bottom: solid 1px;
+    }
+
+    .flex-row {
+        width: 100%;
+    }
+
+    .flex-row.first {
+        width: 100%;
+        border-bottom: solid 1px #d9d9d9;
+    }
+
+    .column {
+        width: 100%;
+    }
+
+    .column .flex-row {
+        border-bottom: solid 1px #d9d9d9;
+    }
+
+    .flex-cell {
+        width: 100%;
+    }
+}
+
+/********** END TABLE ************/
