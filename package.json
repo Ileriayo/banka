@@ -4,7 +4,9 @@
   "description": "Banka is a light-weight core banking application that powers banking operations like account creation, customer deposit and withdrawals. This app is meant to support a single bank, where users can signup and create bank accounts online, but must visit the branch to withdraw or deposit money.",
   "main": "index.js",
   "scripts": {
-    "test": "mocha"
+    "test": "mocha",
+    "dev": "nodemon bin/dev",
+    "start": "node bin/dev"
   },
   "repository": {
     "type": "git",
@@ -17,11 +19,22 @@
     "url": "https://github.com/Ileriayo/banka/issues"
   },
   "homepage": "https://github.com/Ileriayo/banka#readme",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "express": "^4.16.4",
+    "morgan": "^1.9.1"
+  },
   "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.3",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-stage-2": "^6.24.1",
+    "babel-register": "^6.26.0",
     "chai": "^4.2.0",
     "eslint": "^5.16.0",
     "eslint-config-airbnb-base": "^13.1.0",
     "eslint-plugin-import": "^2.17.0",
-    "mocha": "^6.1.3"
+    "mocha": "^6.1.3",
+    "nodemon": "^1.18.11"
   }
 }
