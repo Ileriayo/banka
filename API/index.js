@@ -20,3 +20,5 @@ app.use('/api/v1/auth', userRoutes);
 app.listen(port, host, () => {
   console.log(`Banka is listening on ${host}:${port}`);
 });
+
+export default app;
