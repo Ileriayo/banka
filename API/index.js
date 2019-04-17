@@ -5,7 +5,6 @@ import bodyParser from 'body-parser';
 import userRoutes from './routes/user.routes';
 import adminRoutes from './routes/admin.routes';
 
-const host = process.env.HOST || 'localhost';
 const port = process.env.PORT || 3000;
 
 const app = express();
@@ -19,8 +18,8 @@ app.get('/', (req, res) => res.send('Welcome to Banka'));
 app.use('/api/v1/auth', userRoutes);
 app.use('/api/v1/auth', adminRoutes);
 
-app.listen(port, host, () => {
-  console.log(`Banka is listening on ${host}:${port}`);
+app.listen(port, () => {
+  console.log(`Banka is listening on ${port}`);
 });
 
 export default app;
