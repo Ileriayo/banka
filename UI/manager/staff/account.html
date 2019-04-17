@@ -20,7 +20,7 @@
         <div class="navbar navbar--color">
             <div class="container">
                 <div class="navbar__inner">
-                    <a href="index.html" class="navbar__logo">Banka</a>
+                    <a href="../../index.html" class="navbar__logo">Banka</a>
                     <nav class="navbar__menu">
                         <ul>
                             <li><a href="../../login.html">Log out</a></li>
@@ -49,15 +49,38 @@
                             <li><a href="./accounts_all.html" class="vertical-menu--active go-back">
                                     Back to all Accounts</a> </li>
                             <li>
-                                <button class="button button--red transaction__item__delete"
-                                    data-modal="modal-delete">Delete</button>
+                                <!-- <button class="button button--red transaction__item__delete"
+                                    data-modal="modal">Delete</button> -->
                             </li>
 
                         </ul>
                     </div>
                 </aside>
                 <main>
-                    <div class="transaction">
+                    <div class="table-container">
+                        <div class="flex-table">
+                            <div class="flex-row">Account Name</div>
+                            <div class="flex-row">Account Number</div>
+                            <div class="flex-row">Account Type</div>
+                            <div class="flex-row">Date Created</div>
+                        </div>
+                        <div class="flex-table row">
+                            <div class="flex-row">Ileriayo Adebiyi</div>
+                            <div class="flex-row">0121997286</div>
+                            <div class="flex-row">Savings</div>
+                            <div class="flex-row">19 March, 2019</div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <button class="button button--deep-violet"
+                                href="./account.html">Credit</button>
+                        <button class="button button--tomato"
+                                href="./account.html">Debit</button>
+                        <button class="button button--red transaction__item__delete" data-modal="modal">Delete</button>
+                    </div>
+
+                    <!-- <div class="transaction">
                         <div class="transaction__item">
                             <p class="transaction__item-title">Account Name:</p>
                             <p class="transaction__item-desc">Ileriayo Adebiyi</p>
@@ -78,57 +101,26 @@
                     <div class="transaction__item">
                         <p></p>
                         <span>
-                            <button class="button button--deep-violet credit-debit"
-                                data-modal="modal-credit-debit">Credit / Debit</button>
+                            <button class="button button--deep-violet">Activate</button>
+                            <button disabled class="button button--tomato">Deactivate</button>
                         </span>
-                    </div>
+                    </div> -->
                 </main>
             </div>
         </div>
-
-        <section class="modal" id="modal-delete">
+        <section class="modal" id="modal">
             <div class="transaction modal__content">
                 <div class="transaction__item">
-                    <p class="transaction__item-title">Are you sure you want to delete this transaction?</p>
+                    <p class="transaction__item-title">Are you sure?</p>
                 </div>
                 <div class="transaction__item">
+                    <button class="transaction__delete__cancel button">No</button>
                     <form action="">
                         <button type="submit" class="button button--deep-violet">Yes</button>
                     </form>
-                    <button class="transaction__delete__cancel button">No</button>
                 </div>
             </div>
         </section>
-
-        <section class="modal" id="modal-credit-debit">
-            <div class="transaction modal__content">
-                <div class="transaction__item">
-                    <p></p>
-                    <button class="cancel-debit-credit button button--spaced">X</button>
-                </div>
-                <form action="">
-                    <div class="transaction__item">
-                        <p>Select Operation</p>
-                    </div>
-                    <div class="transaction__item">
-                        <select name="credit-debit" id="">
-                            <option value="credit">Credit</option>
-                            <option value="debit">Debit</option>
-                        </select>
-                    </div>
-                    <div class="transaction__item">
-                        <p>Amount</p>
-                    </div>
-                    <div class="transaction__item">
-                        <input type="number" placeholder="e.g., 15000">
-                    </div>
-                    <div class="transaction__item">
-                        <button type="submit" class="button button--deep-violet">Approve</button>
-                    </div>
-                </form>
-            </div>
-    </div>
-    </section>
     </div>
     <script src="../../js/app.js"></script>
 </body>

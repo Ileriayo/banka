@@ -11,7 +11,7 @@
     <meta name="keywords" content="banka, banking, bank, deposit, withdrawals, accounts, money">
     <meta name="loginor" content="Ileriayo Adebiyi">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>New Manager</title>
+    <title>Login</title>
     <link rel="stylesheet" href="../../css/style.css">
 </head>
 
@@ -23,7 +23,7 @@
                     <a href="../../index.html" class="navbar__logo">Banka</a>
                     <nav class="navbar__menu">
                         <ul>
-                            <li><a href="../../login.html">Sign Out</a></li>
+                            <li><a href="../../login.html">Log In</a></li>
                         </ul>
                     </nav>
                     <div class="navbar__menu-mobile">
@@ -41,30 +41,31 @@
     </header>
 
     <main>
-        <div class="login login--reduce">
+        <div class="login">
             <div class="container">
                 <div class="login__inner">
                     <div class="login__img">
-                        <img src="../../img/team.svg">
+                        <img src="../../img/security.svg">
                     </div>
                     <div class="login__login">
-                        <h1 class="login__title">Create A New Admin/Staff</h1>
+                        <h1 class="login__title">Admin Login</h1>
+                        <div>
+                            <div class="transaction__item">
+                                <div><a class="button" href="../staff/login.html">Staff?</a></div>
+                            </div>
+                        </div>
+                        <p>Enter your email address and password</p>
                         <form method='' action="./accounts_all.html">
-                            <label>Manager</label>
-                            <Select>
-                                <option value="">Admin</option>
-                                <option value="">Staff</option>
-                            </Select>
-                            <label>First Name</label>
-                            <input type="text" name="fname" id="fname" placeholder="First Name">
-                            <label>Last Name</label>
-                            <input type="text" name="lname" id="lname" placeholder="Last Name">
-                            <label>Date of Birth</label>
-                            <input type="date" name="dob" id='lname' placeholder="">
-                            <button type='submit' class="button button--deep-violet">Create</button>
-                            <a href="./accounts_all.html">
-                                <h6 class="go-back">Ignore and go back</h6>
-                            </a>
+                            <label>Account Number</label>
+                            <input type="text" name="email" id='email' placeholder="e.g. admin@admin.com">
+                            <label>Password</label>
+                            <input type="password" name="password" id='password'
+                                placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;"
+                                autocomplete="off">
+                            <button type='submit' class="button button--deep-violet">Log in</button>
+                            <a href="#">
+                                <h6>Forgot your password?</h6>
+                            </a>                            
                         </form>
                     </div>
                 </div>

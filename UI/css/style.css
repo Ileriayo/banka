@@ -130,6 +130,10 @@ select:focus {
     color: #fff;
 }
 
+.button-underline {
+    text-decoration: underline;
+}
+
 .left-align {
     text-align: left;
 }
