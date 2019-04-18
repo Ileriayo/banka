@@ -1,12 +1,12 @@
 const accounts = [
   {
     id: 1,
-    accountNumber: 1121997288,
+    accountNumber: '1121997288',
     createdOn: '23-04-2018',
     owner: 1,
     type: 'savings',
     status: 'active',
-    balance: 10000.00,
+    balance: '10000.00',
   },
   {
     id: 2,
