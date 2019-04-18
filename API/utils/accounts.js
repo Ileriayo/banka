@@ -6,7 +6,7 @@ const accounts = [
     owner: 1,
     type: 'savings',
     status: 'active',
-    balance: '10000.00',
+    balance: 10000.00,
   },
   {
     id: 2,
