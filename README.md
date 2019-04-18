@@ -3,6 +3,11 @@ Banka is a light-weight core banking application that powers banking operations 
 
 [![Build Status](https://travis-ci.org/Ileriayo/banka.svg?branch=develop)](https://travis-ci.org/Ileriayo/banka)
 [![Coverage Status](https://coveralls.io/repos/github/Ileriayo/banka/badge.svg?branch=develop)](https://coveralls.io/github/Ileriayo/banka?branch=develop)
+[![Maintainability](https://api.codeclimate.com/v1/badges/f3d4b4cf41c45532bfd0/maintainability)](https://codeclimate.com/github/Ileriayo/banka/maintainability)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/f3d4b4cf41c45532bfd0/test_coverage)](https://codeclimate.com/github/Ileriayo/banka/test_coverage)
+
+## UI Templates
+<https://ileriayo.github.io/banka/UI>
 
 ## Required Features
 1. User (client) can sign up.
