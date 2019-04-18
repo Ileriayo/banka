@@ -2,3 +2,5 @@
 dist
 /.env
 /.coveralls.yml
+/.nyc_output
+/coverage
