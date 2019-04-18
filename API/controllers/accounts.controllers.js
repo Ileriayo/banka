@@ -42,6 +42,31 @@ class accountController {
       data: userAccount,
     });
   }
+
+  static createBankAccount(req, res) {
+    const newAccount = {};
+
+    newAccount.type = req.body.type;
+    newAccount.balance = 0.00;
+    newAccount.status = 'active';
+    newAccount.creaatedOn = new Date();
+    newAccount.accountNumber = Math.floor(Math.random() * 9000000000) + 1000000000;
+    newAccount.owner = 1;
+    newAccount.id = allAccounts.length + 1;
+
+    if (newAccount.type === null) {
+      res.status(400).json({
+        status: 400,
+        error: 'Bad request',
+      });
+    }
+    allAccounts.push(newAccount);
+
+    res.status(200).json({
+      status: 200,
+      data: allAccounts.filter(account => account.id === allAccounts.length - 1),
+    });
+  }
 }
 
 export default accountController;
