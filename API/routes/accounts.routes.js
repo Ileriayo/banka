@@ -6,5 +6,6 @@ const accountRouter = express.Router();
 
 accountRouter.get('/', accountController.viewAllAccounts);
 accountRouter.delete('/:accountNumber', accountController.deleteAccount);
+accountRouter.get('/:accountNumber', accountController.viewAccount);
 
 export default accountRouter;

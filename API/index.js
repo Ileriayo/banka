@@ -16,7 +16,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.get('/', (req, res) => res.send('Welcome to Banka'));
 
 app.use('/api/v1/auth', userRoutes);
-app.use('/api/v1/auth/accounts', accountRoutes);
+app.use('/api/v1/accounts', accountRoutes);
 
 app.listen(port, () => {
   console.log(`Banka is listening on ${port}`);
