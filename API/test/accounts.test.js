@@ -18,21 +18,42 @@ describe('Accounts', () => {
       });
   });
 
-  it('Should delete a specific account', () => {
-    const account = {
-      id: 1,
-      accountNumber: 1121997288,
-      createdOn: '23-04-2018',
-      owner: 1,
-      type: 'savings',
-      status: 'active',
-      balance: 10000.00,
-    };
+  it('View - Should view a specific account', () => {
     chai.request(app)
-      .delete('/:accountNumber')
-      .send(account)
+    // account exists
+      .get('/api/v1/accounts/1121997288')
+      .end((err, res) => {
+        res.should.have.status(200);
+        res.body.should.be.a('object');
+      });
+  });
+
+  it('View - Should return 404 is account doesn\'t exist', () => {
+    chai.request(app)
+    // invalid account
+      .get('/api/v1/accounts/11219947288')
       .end((err, res) => {
         res.should.have.status(404);
+        res.body.should.be.a('object');
+      });
+  });
+
+  it('Delete - Should delete a single account', () => {
+    chai.request(app)
+      .delete('/api/v1/accounts/1121997288')
+      .end((err, res) => {
+        res.should.have.status(200);
+        res.body.should.be.a('object');
+      });
+  });
+
+  it('Delete - Should return 404 when account does not exist', () => {
+    chai.request(app)
+    // invalid account
+      .delete('/api/v1/accounts/11219947288')
+      .end((err, res) => {
+        res.should.have.status(404);
+        res.body.should.be.a('object');
       });
   });
 });
