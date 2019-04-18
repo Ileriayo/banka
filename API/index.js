@@ -4,6 +4,7 @@ import bodyParser from 'body-parser';
 
 import userRoutes from './routes/user.routes';
 import accountRoutes from './routes/accounts.routes';
+import transactionRoutes from './routes/transactions.routes';
 
 const port = process.env.PORT || 3000;
 
@@ -17,6 +18,7 @@ app.get('/', (req, res) => res.send('Welcome to Banka'));
 
 app.use('/api/v1/auth', userRoutes);
 app.use('/api/v1/accounts', accountRoutes);
+app.use('/api/v1/transactions', transactionRoutes);
 
 app.listen(port, () => {
   console.log(`Banka is listening on ${port}`);

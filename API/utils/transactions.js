@@ -6,7 +6,7 @@ const transactions = [
     accountNumber: 1121997288,
     cashier: 1,
     amount: 10000.00,
-    oldBalance: 0.00,
+    oldBalance: 200.00,
     newBalance: 10000.00,
   },
   {
