@@ -29,8 +29,8 @@ class accountController {
 
   static viewAccount(req, res) {
     const { accountNumber } = req.params;
-    const userAccount = allAccounts.find(account => account.accountNumber === Number(accountNumber));
-    if (!userAccount) {
+    const userAccount = allAccounts.filter(account => account.accountNumber === Number(accountNumber));
+    if (userAccount.length <= 0) {
       res.status(404).json({
         status: 404,
         message: 'Account not found',
@@ -65,6 +65,32 @@ class accountController {
     res.status(200).json({
       status: 200,
       data: allAccounts.filter(account => account.id === allAccounts.length - 1),
+    });
+  }
+
+  static changeStatus(req, res) {
+    const { accountNumber } = req.params;
+    const userAccount = allAccounts.filter(acc => acc.accountNumber === Number(accountNumber));
+    if (userAccount <= 0) {
+      res.status(404).json({
+        status: 404,
+        message: 'No account found',
+      });
+      return;
+    }
+    if (userAccount[0].status === 'active') {
+      userAccount.status = 'dormant';
+    }
+    if (userAccount[0].status === 'dormant') {
+      userAccount.status = 'active';
+    }
+    res.status(200).json({
+      status: 200,
+      message: 'Account status updated',
+      data: {
+        AccountNumber: accountNumber,
+        status: userAccount.status,
+      },
     });
   }
 }
