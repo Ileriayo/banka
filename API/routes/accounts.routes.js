@@ -8,5 +8,6 @@ accountRouter.get('/', accountController.viewAllAccounts);
 accountRouter.post('/', accountController.createBankAccount);
 accountRouter.delete('/:accountNumber', accountController.deleteAccount);
 accountRouter.get('/:accountNumber', accountController.viewAccount);
+accountRouter.patch('/:accountNumber', accountController.changeStatus);
 
 export default accountRouter;

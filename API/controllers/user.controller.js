@@ -7,6 +7,7 @@ class userController {
     const existingUser = userData.find(user => user.email === email)
     return res.json({
       status: 200,
+      message: 'Sign in successful',
       data: existingUser,
     }).status(200);
   }
@@ -19,9 +20,10 @@ class userController {
     if (!newUser) {
       userData.push(req.body);
       return res.json({
-        status: 200,
+        status: 201,
+        message: 'Sign up successful',
         data: userData[userData.length - 1],
-      }).status(200);
+      }).status(201);
     }
     return res.json({
       status: 400,

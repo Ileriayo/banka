@@ -1,7 +1,6 @@
 import chai from 'chai';
 import chaiHttp from 'chai-http';
 
-import accounts from '../utils/accounts';
 import app from '../index';
 
 chai.use(chaiHttp);
@@ -39,7 +38,7 @@ describe('ACCOUNTS', () => {
   });
 
   it('View - Should view a specific account', () => {
-    const account = validAccount.accountNumber
+    const account = validAccount.accountNumber;
     chai.request(app)
     // account exists
       .get(`/api/v1/accounts/${account}`)
@@ -49,10 +48,10 @@ describe('ACCOUNTS', () => {
       });
   });
 
-  it('View - Should return 404 is account doesn\'t exist', () => {
+  it('View - Should return 404 if account doesn\'t exist', () => {
     chai.request(app)
     // invalid account
-      .get('/api/v1/accounts/11219947288')
+      .get('/api/v1/accounts/11219972882')
       .end((err, res) => {
         res.should.have.status(404);
         res.body.should.be.a('object');
