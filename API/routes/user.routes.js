@@ -8,6 +8,7 @@ const userRouter = express.Router();
 
 userRouter.post('/signin', signInValidation, userController.signIn);
 userRouter.post('/signup', signUpValidation, userController.signUp);
+userRouter.post('/staff', signUpValidation, userController.newStaff);
 userRouter.get('/transactions', userController.viewTransactions);
 
 export default userRouter;
