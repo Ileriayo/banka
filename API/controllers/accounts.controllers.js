@@ -11,7 +11,8 @@ class accountController {
 
   static deleteAccount(req, res) {
     const { accountNumber } = req.params;
-    const userAccount = allAccounts.find(account => account.accountNumber === Number(accountNumber));
+    const userAccount = allAccounts
+      .find(account => account.accountNumber === Number(accountNumber));
     if (!userAccount) {
       res.status(404).json({
         status: 404,
@@ -29,7 +30,8 @@ class accountController {
 
   static viewAccount(req, res) {
     const { accountNumber } = req.params;
-    const userAccount = allAccounts.filter(account => account.accountNumber === Number(accountNumber));
+    const userAccount = allAccounts
+      .filter(account => account.accountNumber === Number(accountNumber));
     if (userAccount.length <= 0) {
       res.status(404).json({
         status: 404,
