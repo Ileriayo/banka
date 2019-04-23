@@ -1,13 +1,20 @@
 import allTransactions from '../utils/transactions';
-import accounts from '../utils/accounts';
+import allAccounts from '../utils/accounts';
 
 class transactionController {
+  static viewTransactions(req, res) {
+    return res.status(200).json({
+      status: 200,
+      data: allTransactions,
+    });
+  }
+
   static debitAccount(req, res) {
     const { accountNumber } = req.params;
     const { debitAmount, transactionType } = req.body;
-    for (let i = 0; i < accounts.length; i += 1) {
-      if (accounts[i].accountNumber === accountNumber) {
-        let oldBalance = accounts[i].balance;
+    for (let i = 0; i < allAccounts.length; i += 1) {
+      if (allAccounts[i].accountNumber === Number(accountNumber)) {
+        const oldBalance = allAccounts[i].balance;
         const newTransaction = {
           transactionId: allTransactions.length + 1,
           acountNumber: accountNumber,
@@ -15,11 +22,9 @@ class transactionController {
           oldBalance,
           cashier: 2,
           transactionType,
-          accountBalance: oldBalance -= parseFloat(debitAmount),
+          accountBalance: oldBalance - parseFloat(debitAmount),
         };
-        console.log(typeof balance, typeof debitAmount);
-        console.log(newTransaction.accountBalance);
-        accounts[i].balance = newTransaction.accountBalance;
+        allAccounts[i].balance = newTransaction.accountBalance;
         allTransactions.push(newTransaction);
         return res.status(200).json({
           status: 200,
@@ -33,18 +38,15 @@ class transactionController {
         });
       }
     }
-    return res.status(404).json({
-      status: 404,
-      error: 'not found',
-    });
+    return res.status(404).json({ status: 404, error: 'Account not found' });
   }
 
   static creditAccount(req, res) {
     const { accountNumber } = req.params;
     const { debitAmount, transactionType } = req.body;
-    for (let i = 0; i < accounts.length; i += 1) {
-      if (accounts[i].accountNumber === accountNumber) {
-        let oldBalance = accounts[i].balance;
+    for (let i = 0; i < allAccounts.length; i += 1) {
+      if (allAccounts[i].accountNumber === Number(accountNumber)) {
+        const oldBalance = allAccounts[i].balance;
         const newTransaction = {
           transactionId: allTransactions.length + 1,
           acountNumber: accountNumber,
@@ -52,10 +54,9 @@ class transactionController {
           oldBalance,
           cashier: 2,
           transactionType,
-          accountBalance: oldBalance += debitAmount,
+          accountBalance: oldBalance + Number(debitAmount),
         };
-        
-        accounts[i].balance = newTransaction.accountBalance;
+        allAccounts[i].balance = newTransaction.accountBalance;
         allTransactions.push(newTransaction);
         return res.status(200).json({
           status: 200,
@@ -69,12 +70,8 @@ class transactionController {
         });
       }
     }
-    return res.status(404).json({
-      status: 404,
-      error: 'not found',
-    });
+    return res.status(404).json({ status: 404, error: 'Account not found' });
   }
-  
 }
 
 export default transactionController;

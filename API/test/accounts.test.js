@@ -16,7 +16,7 @@ const validAccount = {
   balance: 20000.00,
 };
 
-describe('ACCOUNTS', () => {
+describe('GET /accounts/', () => {
   it('Should get all user accounts', (done) => {
     chai.request(app)
       .get('/')
@@ -26,7 +26,9 @@ describe('ACCOUNTS', () => {
         done();
       });
   });
+});
 
+describe('POST /accounts', () => {
   it('Should create a new bank account', () => {
     chai.request(app)
       .post('/api/v1/accounts')
@@ -36,8 +38,10 @@ describe('ACCOUNTS', () => {
         res.body.should.be.a('object');
       });
   });
+});
 
-  it('View - Should view a specific account', () => {
+describe('GET /accounts/:accountNumber', () => {
+  it('Should view a specific account', () => {
     const account = validAccount.accountNumber;
     chai.request(app)
     // account exists
@@ -48,7 +52,7 @@ describe('ACCOUNTS', () => {
       });
   });
 
-  it('View - Should return 404 if account doesn\'t exist', () => {
+  it('Should return 404 if account doesn\'t exist', () => {
     chai.request(app)
     // invalid account
       .get('/api/v1/accounts/11219972882')
@@ -57,8 +61,10 @@ describe('ACCOUNTS', () => {
         res.body.should.be.a('object');
       });
   });
+});
 
-  it('Delete - Should delete a single account', () => {
+describe('DELETE /accounts/:accountNumber', () => {
+  it('Should delete a single account', () => {
     chai.request(app)
       .delete('/api/v1/accounts/1121997288')
       .end((err, res) => {
@@ -67,7 +73,7 @@ describe('ACCOUNTS', () => {
       });
   });
 
-  it('Delete - Should return 404 when account does not exist', () => {
+  it('Should return 404 when account does not exist', () => {
     chai.request(app)
     // invalid account
       .delete('/api/v1/accounts/11219947288')
