@@ -1,44 +1,16 @@
-/* eslint-disable consistent-return */
-
 const signUpValidation = (req, res, next) => {
   const {
     firstName, lastName, email, password,
   } = req.body;
-
-  let isAdmin = req.body;
-
   if (!firstName) {
-    return res.json({
-      status: 400,
-      error: 'Firstname field is required',
-    }).status(400);
-  }
-  if (!lastName) {
-    return res.json({
-      status: 400,
-      error: 'Lastname field is required',
-    }).status(400);
-  }
-  if (!email) {
-    return res.json({
-      status: 400,
-      error: 'Email field is required',
-    }).status(400);
-  }
-  if (!password) {
-    return res.json({
-      status: 400,
-      error: 'Password field is required',
-    }).status(400);
-  }
-  if (!isAdmin) {
-    isAdmin = 'client';
-    return res.json({
-      status: 400,
-      error: 'Password field is required',
-    }).status(400);
-  }
-  next();
+    res.json({ status: 400, error: 'Firstname field is required' }).status(400);
+  } else if (!lastName) {
+    res.json({ status: 400, error: 'Lastname field is required' }).status(400);
+  } else if (!email) {
+    res.json({ status: 400, error: 'Email field is required' }).status(400);
+  } else if (!password) {
+    res.json({ status: 400, error: 'Password field is required' }).status(400);
+  } else next();
 };
 
 export default signUpValidation;
