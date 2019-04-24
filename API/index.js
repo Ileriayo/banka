@@ -1,6 +1,7 @@
 import express from 'express';
 import logger from 'morgan';
 import bodyParser from 'body-parser';
+import 'babel-polyfill';
 
 import userRoutes from './routes/user.routes';
 import accountRoutes from './routes/accounts.routes';
