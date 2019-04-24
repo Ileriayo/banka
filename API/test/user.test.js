@@ -14,13 +14,50 @@ describe('POST /api/v1/auth/signup', () => {
     lastName: 'User',
     isAdmin: false,
   };
-  it('Should check for required fields', (done) => {
+  it('Should check for email field', (done) => {
     chai.request(app)
       .post('/api/v1/auth/signup')
       .type('form')
-      .send()
+      .send({
+        password: 'password',
+        firstName: 'New',
+        lastName: 'User',
+        isAdmin: false,
+      })
       .end((err, res) => {
-        res.should.not.have.status(201);
+        res.should.not.have.status(400);
+        res.body.should.be.a('object');
+        done();
+      });
+  });
+  it('Should check for password field', (done) => {
+    chai.request(app)
+      .post('/api/v1/auth/signup')
+      .type('form')
+      .send({
+        email: 'newUser@gmail.com',
+        firstName: 'New',
+        lastName: 'User',
+        isAdmin: false,
+      })
+      .end((err, res) => {
+        res.should.not.have.status(400);
+        res.body.should.be.a('object');
+        done();
+      });
+  });
+  it('Should check for lastname field', (done) => {
+    chai.request(app)
+      .post('/api/v1/auth/signup')
+      .type('form')
+      .send({
+        email: 'newUser@gmail.com',
+        password: 'password',
+        firstName: 'New',
+        isAdmin: false,
+      })
+      .end((err, res) => {
+        res.should.not.have.status(400);
         res.body.should.be.a('object');
         done();
       });
@@ -102,6 +139,17 @@ describe('POST /api/v1/auth/signin', () => {
         done();
       });
   });
+  it('Should check if password is incorrect', (done) => {
+    chai.request(app)
+      .post('/api/v1/auth/signin')
+      .type('form')
+      .send({ email: 'ileriayo@gmail.com', password: 'incorrect-password' })
+      .end((err, res) => {
+        res.body.should.have.status(403);
+        res.body.should.be.a('object');
+        done();
+      });
+  });
 });
 
 describe('POST /api/v1/auth/staff', () => {
@@ -143,16 +191,3 @@ describe('POST /api/v1/auth/staff', () => {
       });
   });
 });
-
-
-// describe('GET /api/v1/auth/transactions', () => {
-//   it('Should get all transactions', (done) => {
-//     chai.request(app)
-//       .get('/')
-//       .end((err, res) => {
-//         res.should.have.status(200);
-//         res.body.should.be.a('object');
-//         done();
-//       });
-//   });
-// });
