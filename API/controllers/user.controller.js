@@ -1,6 +1,5 @@
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
-
 import userData from '../utils/users';
 
 class userController {
