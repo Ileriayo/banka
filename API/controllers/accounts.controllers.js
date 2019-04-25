@@ -39,12 +39,12 @@ class accountController {
     newAccount.owner = 1;
     newAccount.id = allAccounts.length + 1;
     if (newAccount.type === null) {
-      res.status(400).json({ status: 400, error: 'Bad request' })
+      res.status(400).json({ status: 400, error: 'Bad request' });
       return;
     }
     allAccounts.push(newAccount);
-    res.status(200).json({
-      status: 200,
+    res.status(201).json({
+      status: 201,
       data: allAccounts.filter(account => account.id === allAccounts.length - 1),
     });
   }
