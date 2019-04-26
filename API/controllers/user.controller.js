@@ -26,7 +26,7 @@ class userController {
     if (existingUser.length > 0) {
       res.status(409).json({
         status: 409,
-        error: 'Conflict: Email already exists',
+        error: 'Email already exists',
       });
       return;
     }
@@ -53,7 +53,7 @@ class userController {
     if (existingStaff.length > 0) {
       return res.status(409).json({
         status: 409,
-        error: 'Conflict: Email already exists',
+        error: 'Email already exists',
       });
     }
     const hashedPassword = hashPassword(password);
