@@ -1,5 +1,6 @@
 import db from '../db/index';
 
+
 class transactionController {
   static async viewTransactions(req, res) {
     const getAllTransactions = 'SELECT * FROM users LIMIT 100';

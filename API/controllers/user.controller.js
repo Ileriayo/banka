@@ -1,13 +1,20 @@
 import userData from '../utils/users';
+import tokenizer from '../Helper/tokenizer';
+import hashPassword from '../Helper/hashPassword';
+import emailExist from '../Helper/emailExist';
 
 class userController {
   static signIn(req, res) {
     const { email } = req.body;
-    const validUser = userData.filter(user => user.email === email);
+    const validUser = emailExist(email, userData);
+    const { id, firstName, lastName } = validUser[0];
+    const token = tokenizer({ id, email });
     res.status(200).json({
       status: 200,
       message: 'Sign in successful',
-      data: validUser,
+      data: {
+        token, id, email, firstName, lastName,
+      },
     });
   }
 
@@ -15,48 +22,63 @@ class userController {
     const {
       email, firstName, lastName, password,
     } = req.body;
-    const existingUser = userData.filter(user => user.email === email);
-    const newUser = {
-      id: userData.length + 1, email, firstName, lastName, password, type: 'client', isAdmin: false,
-    };
-    if (existingUser.length <= 0) {
-      userData.push(newUser);
-      res.status(201).json({
-        status: 201,
-        message: 'Sign up successful',
-        data: userData[userData.length - 1],
+    const existingUser = emailExist(email, userData);
+    if (existingUser.length > 0) {
+      res.status(409).json({
+        status: 409,
+        error: 'Conflict: Email already exists',
       });
       return;
     }
-    res.status(400).json({
-      status: 400,
-      error: 'email already exists',
+    const hashedPassword = hashPassword(password);
+    const newUser = {
+      id: userData.length + 1, email, firstName, lastName, password: hashedPassword, type: 'client', isAdmin: false,
+    };
+    const token = tokenizer({ id: newUser.id, email });
+    userData.push(newUser);
+    res.status(201).json({
+      status: 201,
+      message: 'Sign up successful',
+      data: {
+        token, id: newUser.id, email, firstName, lastName, type: newUser.type,
+      },
     });
   }
 
   static newStaff(req, res) {
     const {
-      email, firstName, lastName, password, isAdmin,
+      email, firstName, lastName, password,
     } = req.body;
-    const existingStaff = userData.filter(user => user.email === email);
-    const newStaff = {
-      id: userData[userData.length], email, firstName, lastName, password, type: 'staff', isAdmin: false,
-    };
+    const existingStaff = emailExist(email, userData);
     if (existingStaff.length > 0) {
-      res.status(400).json({
-        status: 400,
-        error: 'email already exists',
+      return res.status(409).json({
+        status: 409,
+        error: 'Conflict: Email already exists',
       });
-      return;
     }
-    if (existingStaff.length <= 0 && isAdmin === true) {
+    const hashedPassword = hashPassword(password);
+    const newStaff = {
+      id: userData.length + 1, email, firstName, lastName, password: hashedPassword, type: 'staff', isAdmin: false,
+    };
+    if (req.body.isAdmin === true) {
       newStaff.isAdmin = true;
     }
+    const token = tokenizer({
+      id: newStaff.id, email,
+    });
     userData.push(newStaff);
-    res.status(201).json({
+    return res.status(201).json({
       status: 201,
       message: 'New staff successfully created',
-      data: userData[userData.length - 1],
+      data: {
+        token,
+        id: newStaff.id,
+        email,
+        firstName,
+        lastName,
+        type: newStaff.type,
+        isAdmin: newStaff.isAdmin,
+      },
     });
   }
 }

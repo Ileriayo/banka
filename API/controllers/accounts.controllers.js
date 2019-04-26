@@ -39,12 +39,12 @@ class accountController {
     newAccount.owner = 1;
     newAccount.id = allAccounts.length + 1;
     if (newAccount.type === null) {
-      res.status(400).json({ status: 400, error: 'Bad request' })
+      res.status(400).json({ status: 400, error: 'Bad request' });
       return;
     }
     allAccounts.push(newAccount);
-    res.status(200).json({
-      status: 200,
+    res.status(201).json({
+      status: 201,
       data: allAccounts.filter(account => account.id === allAccounts.length - 1),
     });
   }
@@ -58,18 +58,26 @@ class accountController {
     }
     if (userAccount[0].status === 'active') {
       userAccount.status = 'dormant';
+      res.status(200).json({
+        status: 200,
+        message: 'Account status updated',
+        data: {
+          AccountNumber: accountNumber,
+          status: userAccount.status,
+        },
+      });
     }
     if (userAccount[0].status === 'dormant') {
       userAccount.status = 'active';
+      res.status(200).json({
+        status: 200,
+        message: 'Account status updated',
+        data: {
+          AccountNumber: accountNumber,
+          status: userAccount.status,
+        },
+      });
     }
-    res.status(200).json({
-      status: 200,
-      message: 'Account status updated',
-      data: {
-        AccountNumber: accountNumber,
-        status: userAccount.status,
-      },
-    });
   }
 }
 

@@ -11,11 +11,19 @@ pool.on('connect', () => {
 });
 
 export default {
-  query(text, params) {
-    return new Promise((res, rej) => {
-      pool.query(text, params)
-        .then(done => res(done))
-        .catch(err => rej(err));
-    });
+  // query(text, params) {
+  //   return new Promise((res, rej) => {
+  //     pool.query(text, params)
+  //       .then(done => res(done))
+  //       .catch(err => rej(err));
+  //   });
+  // },
+
+  async query(text, params) {
+    try {
+      return pool.query(text, params);
+    } catch (err) {
+      return err;
+    }
   },
 };
