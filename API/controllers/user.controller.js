@@ -1,15 +1,14 @@
-import bcrypt from 'bcryptjs';
 import userData from '../utils/users';
 import tokenizer from '../Helper/tokenizer';
+import hashPassword from '../Helper/hashPassword';
+import emailExist from '../Helper/emailExist';
 
 class userController {
   static signIn(req, res) {
     const { email } = req.body;
-    const validUser = userData.filter(user => user.email === email);
+    const validUser = emailExist(email, userData);
     const { id, firstName, lastName } = validUser[0];
-    const token = tokenizer({
-      id, email, firstName, lastName,
-    }, '365d');
+    const token = tokenizer({ id, email });
     res.status(200).json({
       status: 200,
       message: 'Sign in successful',
@@ -23,7 +22,7 @@ class userController {
     const {
       email, firstName, lastName, password,
     } = req.body;
-    const existingUser = userData.filter(user => user.email === email);
+    const existingUser = emailExist(email, userData);
     if (existingUser.length > 0) {
       res.status(409).json({
         status: 409,
@@ -31,66 +30,56 @@ class userController {
       });
       return;
     }
-    bcrypt.hash(password, 10, ((err, hash) => {
-      const newUser = {
-        id: userData.length + 1, email, firstName, lastName, password: hash, type: 'client', isAdmin: false,
-      };
-      const token = tokenizer({
-        id: newUser.id,
-        email,
-        firstName,
-        lastName,
-        type: newUser.type,
-        isAdmin: newUser.isAdmin,
-      });
-      userData.push(newUser);
-      return res.status(201).json({
-        status: 201,
-        message: 'Sign up successful',
-        data: {
-          token, id: newUser.id, email, firstName, lastName, type: newUser.type,
-        },
-      });
-    }));
+    const hashedPassword = hashPassword(password);
+    const newUser = {
+      id: userData.length + 1, email, firstName, lastName, password: hashedPassword, type: 'client', isAdmin: false,
+    };
+    const token = tokenizer({ id: newUser.id, email });
+    userData.push(newUser);
+    res.status(201).json({
+      status: 201,
+      message: 'Sign up successful',
+      data: {
+        token, id: newUser.id, email, firstName, lastName, type: newUser.type,
+      },
+    });
   }
 
   static newStaff(req, res) {
     const {
       email, firstName, lastName, password,
     } = req.body;
-    const existingStaff = userData.filter(user => user.email === email);
+    const existingStaff = emailExist(email, userData);
     if (existingStaff.length > 0) {
-      res.status(409).json({
+      return res.status(409).json({
         status: 409,
         error: 'Conflict: Email already exists',
       });
-      return;
     }
-    bcrypt.hash(password, 10, ((err, hash) => {
-      const newStaff = {
-        id: userData.length + 1, email, firstName, lastName, password: hash, type: 'staff', isAdmin: false,
-      };
-      if (req.body.isAdmin === true) {
-        newStaff.isAdmin = true;
-      }
-      const token = tokenizer({
-        id: newStaff.id, email, firstName, lastName, type: newStaff.type, isAdmin: newStaff.isAdmin,
-      });
-      userData.push(newStaff);
-      res.status(201).json({
-        status: 201,
-        message: 'New staff successfully created',
-        data: {
-          token,
-          id: newStaff.id,
-          email,
-          firstName,
-          lastName,
-          type: newStaff.type,
-          isAdmin: newStaff.isAdmin,
-        },
-      });
-    }));
+    const hashedPassword = hashPassword(password);
+    const newStaff = {
+      id: userData.length + 1, email, firstName, lastName, password: hashedPassword, type: 'staff', isAdmin: false,
+    };
+    if (req.body.isAdmin === true) {
+      newStaff.isAdmin = true;
+    }
+    const token = tokenizer({
+      id: newStaff.id, email,
+    });
+    userData.push(newStaff);
+    return res.status(201).json({
+      status: 201,
+      message: 'New staff successfully created',
+      data: {
+        token,
+        id: newStaff.id,
+        email,
+        firstName,
+        lastName,
+        type: newStaff.type,
+        isAdmin: newStaff.isAdmin,
+      },
+    });
   }
 }
 

@@ -1,4 +1,6 @@
-import jwt from 'jsonwebtoken';
+import decodeToken from '../Helper/decodeToken';
+import userFromToken from '../Helper/userFromToken';
+import userData from '../utils/users';
 
 const client = (req, res, next) => {
   try {
@@ -9,8 +11,8 @@ const client = (req, res, next) => {
       });
     }
     const token = req.headers.authorization.split(' ')[1];
-    const decoded = jwt.verify(token, process.env.JWT_KEY);
-    req.data = decoded;
+    const decoded = decodeToken(token);
+    req.data = userFromToken(decoded, userData);
     return next();
   } catch (err) {
     return res.status(401).json({
@@ -31,14 +33,13 @@ const staff = (req, res, next) => {
 };
 
 const admin = (req, res, next) => {
-  if (req.data.isAdmin !== 'true') {
-    return res.status(401).json({
-      status: 401,
-      error: 'Not an admin',
-    });
+  if (req.data.type === 'admin') {
+    return next();
   }
-  return next();
+  return res.status(401).json({
+    status: 401,
+    error: 'Not an admin',
+  });
 };
-
 
 export default { client, staff, admin };

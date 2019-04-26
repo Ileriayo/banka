@@ -12,10 +12,10 @@ const newStaff = {
   email: 'newstaff@gmail.com', firstName: 'user', lastName: 'user', password: 'password', type: 'staff', isAdmin: false,
 };
 
-const userDetails = {};
-const newcClient = {
-  id: 200, email: 'newuser@gmail.com', firstName: 'user', lastName: 'staff', type: 'client', isAdmin: false,
-};
+// const userDetails = {};
+// const newcClient = {
+//   id: 200, email: 'newuser@gmail.com', firstName: 'user', lastName: 'staff', type: 'client', isAdmin: false,
+// };
 
 const validAccount = {
   id: 1,
@@ -131,7 +131,6 @@ describe('GET /accounts/:accountNumber', () => {
     //       .set('Authorization', `Bearer ${staffDetails.token}`)
     //       .send({ testAccount })
     //       .end((err, res) => {
-    //         console.log(res, staffDetails.token);
     //         res.body.should.have.status(200);
     //         res.body.should.be.a('object');
     //         done();

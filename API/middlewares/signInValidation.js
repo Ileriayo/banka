@@ -1,5 +1,6 @@
 import bcrypt from 'bcryptjs';
 import userData from '../utils/users';
+import emailExist from '../Helper/emailExist';
 
 
 const signInValidation = (req, res, next) => {
@@ -12,8 +13,9 @@ const signInValidation = (req, res, next) => {
   if (!password) {
     return res.status(400).json({ status: 400, error: 'Password field is required' });
   }
-  const existingUser = userData.find(user => user.email === email);
-  if (!existingUser) {
+  // WILL ONLY MAKE SENSE ON POSTGRES WHERE I CAN COMPARE HASH
+  const existingUser = emailExist(email, userData);
+  if (existingUser <= 0) {
     return res.status(404).json({ status: 404, error: 'Auth failed' });
   }
   const validPassword = bcrypt.compareSync(password, existingUser.password);
