@@ -7,37 +7,10 @@ import app from '../index';
 chai.use(chaiHttp);
 chai.should();
 
-let staffToken;
-let clientToken;
-before(() => {
-  chai.request(app)
-    .post('/api/v1/auth/staff')
-    .send({
-      email: 'newStaff@gmail.com',
-      password: 'password',
-      firstName: 'New',
-      lastName: 'User',
-      isAdmin: true,
-    })
-    .end((err, res) => {
-      const { token } = res.body.data;
-      staffToken = token;
-    });
-});
-before(() => {
-  chai.request(app)
-    .post('/api/v1/auth/signup')
-    .send({
-      email: 'newClient@gmail.com',
-      password: 'password',
-      firstName: 'New',
-      lastName: 'Client',
-    })
-    .end((err, res) => {
-      const { token } = res.body.data;
-      clientToken = token;
-    });
-});
+const staffDetails = {};
+const newStaff = {
+  email: 'newstaff2@gmail.com', firstName: 'user', lastName: 'user', password: 'password', type: 'staff', isAdmin: false,
+};
 
 const validAccount = {
   id: 2,
@@ -50,9 +23,22 @@ const validAccount = {
 };
 
 describe('GET /api/v1/transactions', () => {
+  it('Should create a new staff for test', (done) => {
+    chai.request(app)
+      .post('/api/v1/auth/staff')
+      .type('form')
+      .send(newStaff)
+      .end((err, res) => {
+        res.should.have.status(201);
+        res.body.should.be.a('object');
+        staffDetails.token = res.body.data.token;
+        done();
+      });
+  });
   it('Should get all transactions', (done) => {
     chai.request(app)
-      .get('/')
+      .get('/api/v1/transactions')
+      .set('Authorization', `Bearer ${staffDetails.token}`)
       .end((err, res) => {
         res.should.have.status(200);
         res.body.should.be.a('object');
@@ -69,7 +55,7 @@ describe('POST /api/v1/transactions/<account-number>/debit', () => {
     chai.request(app)
       .post(`/api/v1/transactions/${validAccount.accountNumber}/debit`)
       .send(data)
-      .set('Authorization', `Bearer ${staffToken}`)
+      .set('Authorization', `Bearer ${staffDetails.token}`)
       .end((err, res) => {
         res.should.have.status(200);
         res.body.should.be.a('object');
@@ -87,7 +73,7 @@ describe('POST /api/v1/transactions/<account-number>/credit', () => {
     chai.request(app)
       .post(`/api/v1/transactions/${validAccount.accountNumber}/credit`)
       .send(data)
-      .set('Authorization', `Bearer ${staffToken}`)
+      .set('Authorization', `Bearer ${staffDetails.token}`)
       .end((err, res) => {
         res.should.have.status(200);
         res.body.should.be.a('object');

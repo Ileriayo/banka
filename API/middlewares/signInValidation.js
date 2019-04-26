@@ -17,7 +17,7 @@ const signInValidation = (req, res, next) => {
     return res.status(404).json({ status: 404, error: 'Auth failed' });
   }
   const validPassword = bcrypt.compareSync(password, existingUser.password);
-  if (!validPassword) res.status(401).json({ status: 401, error: 'Password incorrect' });
+  if (!validPassword) return res.status(401).json({ status: 401, error: 'Password incorrect' });
   return next();
 };
 

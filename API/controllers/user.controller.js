@@ -1,15 +1,15 @@
-import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
 import userData from '../utils/users';
+import tokenizer from '../Helper/tokenizer';
 
 class userController {
   static signIn(req, res) {
     const { email } = req.body;
     const validUser = userData.filter(user => user.email === email);
     const { id, firstName, lastName } = validUser[0];
-    const token = jwt.sign({
+    const token = tokenizer({
       id, email, firstName, lastName,
-    }, process.env.JWT_key, { expiresIn: '365d' });
+    }, '365d');
     res.status(200).json({
       status: 200,
       message: 'Sign in successful',
@@ -35,9 +35,14 @@ class userController {
       const newUser = {
         id: userData.length + 1, email, firstName, lastName, password: hash, type: 'client', isAdmin: false,
       };
-      const token = jwt.sign({
-        id: newUser.id, email, firstName, lastName, type: newUser.type, isAdmin: newUser.isAdmin,
-      }, process.env.JWT_key, { expiresIn: '365d' });
+      const token = tokenizer({
+        id: newUser.id,
+        email,
+        firstName,
+        lastName,
+        type: newUser.type,
+        isAdmin: newUser.isAdmin,
+      });
       userData.push(newUser);
       return res.status(201).json({
         status: 201,
@@ -68,9 +73,9 @@ class userController {
       if (req.body.isAdmin === true) {
         newStaff.isAdmin = true;
       }
-      const token = jwt.sign({
+      const token = tokenizer({
         id: newStaff.id, email, firstName, lastName, type: newStaff.type, isAdmin: newStaff.isAdmin,
-      }, process.env.JWT_key, { expiresIn: '365d' });
+      });
       userData.push(newStaff);
       res.status(201).json({
         status: 201,

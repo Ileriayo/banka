@@ -58,18 +58,26 @@ class accountController {
     }
     if (userAccount[0].status === 'active') {
       userAccount.status = 'dormant';
+      res.status(200).json({
+        status: 200,
+        message: 'Account status updated',
+        data: {
+          AccountNumber: accountNumber,
+          status: userAccount.status,
+        },
+      });
     }
     if (userAccount[0].status === 'dormant') {
       userAccount.status = 'active';
+      res.status(200).json({
+        status: 200,
+        message: 'Account status updated',
+        data: {
+          AccountNumber: accountNumber,
+          status: userAccount.status,
+        },
+      });
     }
-    res.status(200).json({
-      status: 200,
-      message: 'Account status updated',
-      data: {
-        AccountNumber: accountNumber,
-        status: userAccount.status,
-      },
-    });
   }
 }
 

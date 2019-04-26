@@ -4,6 +4,8 @@ import chaiHttp from 'chai-http';
 
 import app from '../index';
 
+const userDetail = {};
+
 chai.use(chaiHttp);
 chai.should();
 
@@ -103,6 +105,8 @@ describe('POST /api/v1/auth/signin', () => {
       .end((err, res) => {
         res.should.have.status(200);
         res.body.should.be.a('object');
+        console.log('Response---------------------', res.body);
+        userDetail.token = res.body;
         done();
       });
   });
