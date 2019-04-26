@@ -1,12 +1,14 @@
 import jwt from 'jsonwebtoken';
 
-const tokenizer = (payload, expiresIn = '365d') => {
-  const token = jwt.sign(
-    payload,
-    process.env.JWT_KEY,
-    { expiresIn },
-  );
-  return token;
-};
+class Tokenizer {
+  static tokenizer(payload, expiresIn = '1h') {
+    const token = jwt.sign(
+      payload,
+      process.env.JWT_KEY,
+      { expiresIn },
+    );
+    return token;
+  }
+}
 
-export default tokenizer;
+export default Tokenizer;

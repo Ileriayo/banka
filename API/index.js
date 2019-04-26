@@ -2,6 +2,7 @@ import express from 'express';
 import logger from 'morgan';
 import bodyParser from 'body-parser';
 import 'babel-polyfill';
+import pool from './db/db';
 
 import userRoutes from './routes/user.routes';
 import accountRoutes from './routes/accounts.routes';
