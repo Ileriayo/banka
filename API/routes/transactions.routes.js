@@ -7,7 +7,7 @@ import transactionDBController from '../controllers/transactionsDB.controller';
 const transactionRouter = express.Router();
 
 // Postgres DB
-transactionRouter.get('/', aunthenticate.client, transactionDBController.viewTransactions);
+transactionRouter.get('/', aunthenticate.client, transactionDBController.viewAllTransactions);
 
 // Dummy DB
 // transactionRouter.get('/', aunthenticate.client, transactionController.viewTransactions);
