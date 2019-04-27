@@ -56,14 +56,14 @@ class userController {
         error: 'User does not exist',
       });
     }
-    const validPassword = await checkPassword(password, validUser.password);
+    const validPassword = await checkPassword(password, validUser[0].password);
     if (!validPassword) {
       return res.status(401).json({
         status: 401,
         error: 'Incorrect password',
       });
     }
-    const { id, firstname, lastname } = validUser;
+    const { id, firstname, lastname } = validUser[0];
     const token = await tokenizer({ id, email });
     return res.status(200).json({
       status: 200,

@@ -1,9 +1,20 @@
-// import allAccounts from '../utils/accounts';
+import Query from '../db/db';
 
-// class accountController {
-//   static viewAllAccounts(req, res) {
-//     res.status(200).json({ status: 200, data: allAccounts });
-//   }
+const { query } = Query;
+
+class AccountController {
+  static async viewAllAccounts(req, res) {
+    const getAllAccounts = 'SELECT * FROM accounts LIMIT 100';
+    try {
+      const { rows } = await query(getAllAccounts, []);
+      return res.status(200).json({ Status: 200, data: rows });
+    } catch (err) {
+      return res.status(400).json({ Status: 400, Error: err });
+    }
+  }
+}
+
+export default AccountController;
 
 //   static deleteAccount(req, res) {
 //     const { accountNumber } = req.params;

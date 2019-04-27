@@ -1,45 +1,50 @@
-import decodeToken from '../Helper/decodeToken';
-import userFromToken from '../Helper/userFromToken';
-import userData from '../utils/users';
+import DecodeToken from '../Helper/decodeToken';
+import UserFromToken from '../Helper/userFromToken';
 
-const client = (req, res, next) => {
-  try {
-    if (!req.headers.authorization) {
+const { decodeToken } = DecodeToken;
+const { userFromToken } = UserFromToken;
+
+class Authenticate {
+  static async client(req, res, next) {
+    try {
+      if (!req.headers.authorization) {
+        return res.status(401).json({
+          status: 401,
+          error: 'No token provided',
+        });
+      }
+      const token = req.headers.authorization.split(' ')[1];
+      const decoded = await decodeToken(token);
+      req.data = await userFromToken(decoded);
+      return next();
+    } catch (err) {
       return res.status(401).json({
         status: 401,
-        error: 'No token provided',
+        error: 'Unathorised User',
       });
     }
-    const token = req.headers.authorization.split(' ')[1];
-    const decoded = decodeToken(token);
-    req.data = userFromToken(decoded, userData);
-    return next();
-  } catch (err) {
-    return res.status(401).json({
-      status: 401,
-      error: 'Unathorised User',
-    });
   }
-};
 
-const staff = (req, res, next) => {
-  if (req.data.type !== 'staff') {
-    return res.status(401).json({
-      status: 401,
-      error: 'Unathorised User',
-    });
-  }
-  return next();
-};
-
-const admin = (req, res, next) => {
-  if (req.data.type === 'admin') {
+  static async staff(req, res, next) {
+    if (req.data[0].type !== 'staff') {
+      return res.status(401).json({
+        status: 401,
+        error: 'Must be a Staff',
+      });
+    }
     return next();
   }
-  return res.status(401).json({
-    status: 401,
-    error: 'Must be admin',
-  });
-};
 
-export default { client, staff, admin };
+  static async admin(req, res, next) {
+    if (req.data[0].type === 'admin') {
+      return next();
+    }
+    return res.status(401).json({
+      status: 401,
+      error: 'Must be an Admin',
+    });
+  }
+}
+
+
+export default Authenticate;
