@@ -7,6 +7,7 @@ import accountController from '../controllers/accountsDB.controller';
 const accountRouter = express.Router();
 
 accountRouter.get('/', aunthenticate.client, aunthenticate.staff, accountController.viewAllAccounts);
+accountRouter.get('status=dormant', aunthenticate.client, aunthenticate.staff, accountController.ViewDormantAccounts);
 // accountRouter.post('/', aunthenticate.client, accountController.createBankAccount);
 // accountRouter.delete('/:accountNumber', aunthenticate.client, aunthenticate.staff, accountController.deleteAccount);
 // accountRouter.get('/:accountNumber', aunthenticate.client, accountController.viewAccount);
