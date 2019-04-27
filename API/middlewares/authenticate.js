@@ -17,7 +17,7 @@ const client = (req, res, next) => {
   } catch (err) {
     return res.status(401).json({
       status: 401,
-      error: 'Unathorised Client',
+      error: 'Unathorised User',
     });
   }
 };
@@ -26,7 +26,7 @@ const staff = (req, res, next) => {
   if (req.data.type !== 'staff') {
     return res.status(401).json({
       status: 401,
-      error: 'Unathorised Staff',
+      error: 'Unathorised User',
     });
   }
   return next();
@@ -38,7 +38,7 @@ const admin = (req, res, next) => {
   }
   return res.status(401).json({
     status: 401,
-    error: 'Not an admin',
+    error: 'Must be admin',
   });
 };
 
