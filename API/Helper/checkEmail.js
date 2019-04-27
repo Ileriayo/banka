@@ -1,16 +1,23 @@
-import db from '../db/index';
+import Query from '../db/db';
 
-const emailExist = (prop, userData) => {
-  const data = userData.filter(user => user.email === prop);
-  return data;
-};
+const { query } = Query;
 
-class EmailExistDB {
-  static async emailExistDB(email) {
-    const queryString = 'SELECT * FROM users WHERE email = $1';
-    const data = await db.query(queryString, [email]);
-    return data.rows[0];
+// const emailExist = (prop, userData) => {
+//   const data = userData.filter(user => user.email === prop);
+//   return data;
+// };
+
+class CheckEmail {
+  static async checkEmail(email) {
+    try {
+      const queryString = 'SELECT * FROM users WHERE email = $1';
+      const data = await query(queryString, [email]);
+      if (data.rows.length <= 0) return [];
+      return data.rows;
+    } catch (err) {
+      return err;
+    }
   }
 }
 
-export default EmailExistDB;
+export default CheckEmail;
