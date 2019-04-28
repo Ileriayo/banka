@@ -23,7 +23,7 @@ const createAccountsTable = `
         id SERIAL PRIMARY KEY,
         accountnumber INT NOT NULL,
         createdon DATE NOT NULL,
-        owner VARCHAR(128) NOT NULL,
+        owner INT NOT NULL,
         type VARCHAR(128) NOT NULL,
         status VARCHAR(128) NOT NULL,
         balance NUMERIC(25,2) NOT NULL
