@@ -16,7 +16,13 @@ class AccountController {
   static async ViewActiveAccounts(req, res) {
     const getDormantAccounts = 'SELECT * FROM accounts WHERE status = $1 LIMIT 100';
     try {
-      const { rows } = await query(getDormantAccounts, ['active']);
+      const { rows } = await query(getActiveAccounts, ['active']);
+
+  static async ViewDormantAccounts(req, res) {
+    const getDormantAccounts = 'SELECT * FROM accounts WHERE status = $1 LIMIT 100';
+    try {
+      const { rows } = await query(getDormantAccounts, ['dormant']);
+
       return res.status(200).json({ Status: 200, data: rows });
     } catch (err) {
       return res.status(400).json({ Status: 400, Error: err });
