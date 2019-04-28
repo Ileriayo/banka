@@ -37,9 +37,9 @@ const createTransactionsTable = `
         type VARCHAR(128) NOT NULL,
         accountnumber INT NOT NULL,
         cashier INT NOT NULL,
-        amount NUMERIC(25,2) NOT NULL,
-        oldbalance NUMERIC(25,2) NOT NULL,
-        newbalance NUMERIC(25,2) NOT NULL
+        amount FLOAT(2) NOT NULL,
+        oldbalance FLOAT(2) NOT NULL,
+        newbalance FLOAT(2) NOT NULL
     );`;
 
 pool.query(createUserTable)

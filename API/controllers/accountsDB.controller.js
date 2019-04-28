@@ -13,6 +13,25 @@ class AccountController {
       return res.status(400).json({ Status: 400, error: err });
     }
   }
+
+  static async viewAllTransactions(req, res) {
+    const { id } = req.data[0];
+    const { accountNumber } = req.params;
+    const getAllTransactions = `SELECT transactions.id, transactions.createdon,
+                                       transactions.type, transactions.accountnumber,
+                                       transactions.amount, transactions.oldbalance,
+                                       transactions.newbalance FROM transactions
+                                INNER JOIN accounts
+                                ON transactions.accountnumber = accounts.accountnumber
+                                WHERE accounts.accountnumber = $1
+                                AND accounts.owner = $2`;
+    try {
+      const { rows } = await query(getAllTransactions, [accountNumber, id]);
+      return res.status(200).json({ Status: 200, data: rows });
+    } catch (err) {
+      return res.status(400).json({ Status: 400, Error: err });
+    }
+  }
 }
 
 export default AccountController;
