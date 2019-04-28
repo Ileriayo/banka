@@ -32,6 +32,21 @@ class AccountController {
       return res.status(400).json({ Status: 400, Error: err });
     }
   }
+
+  static async viewAccountDetails(req, res) {
+    const { accountNumber } = req.params;
+
+    const getAccountDetails = `SELECT createdon, accountnumber, users.email, users.id, accounts.type, status, balance FROM accounts
+                               INNER JOIN users
+                               ON accounts.owner = users.id
+                               WHERE accountnumber = $1`;
+    try {
+      const { rows } = await query(getAccountDetails, [accountNumber]);
+      return res.status(200).json({ Status: 200, data: rows });
+    } catch (err) {
+      return res.status(400).json({ Status: 400, Error: err });
+    }
+  }
 }
 
 export default AccountController;
