@@ -3,11 +3,13 @@ import logger from 'morgan';
 import bodyParser from 'body-parser';
 import expressValidator from 'express-validator';
 import 'babel-polyfill';
-// import pool from './db/db';
 
+import AccountController from './controllers/accountsDB.controller';
 import userRoutes from './routes/user.routes';
 import accountRoutes from './routes/accounts.routes';
 import transactionRoutes from './routes/transactions.routes';
+
+const { viewUserAccounts } = AccountController;
 
 const port = process.env.PORT || 3000;
 
@@ -31,7 +33,7 @@ app.use((req, res, next) => {
 
 app.get('/', (req, res) => res.send('Welcome to Banka'));
 
-app.use('/api/v1/auth', userRoutes);
+app.use('/api/v1/', userRoutes);
 app.use('/api/v1/accounts', accountRoutes);
 app.use('/api/v1/transactions', transactionRoutes);
 
