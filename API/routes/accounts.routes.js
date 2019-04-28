@@ -7,6 +7,7 @@ import accountController from '../controllers/accountsDB.controller';
 
 const accountRouter = express.Router();
 
+accountRouter.get('/:accountNumber/transactions', aunthenticate.client, accountController.viewAllTransactions);
 accountRouter.get('/', aunthenticate.client, aunthenticate.staff, CheckReqQuery.checkReqQuery, accountController.viewAllAccounts);
 
 // accountRouter.post('/', aunthenticate.client, accountController.createBankAccount);
