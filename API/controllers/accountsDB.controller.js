@@ -90,15 +90,16 @@ class AccountController {
   }
 
   static async changeStatus(req, res) {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ status: 400, errors: errors.array() });
+    }
     const { accountNumber } = req.params;
     const userAccount = await selectWithClause('accounts', 'accountnumber', accountNumber);
     if (userAccount.length <= 0) {
       return res.status(404).json({ status: 404, message: 'Account not found' });
     }
-    let { status } = userAccount[0];
-    if (status === 'active') {
-      status = 'dormant';
-    } else status = 'active';
+    const { status } = req.body;
     const queryString = 'UPDATE accounts SET status = $1 where accountnumber = $2';
     await query(queryString, [status, accountNumber]);
     return res.status(200).json({
