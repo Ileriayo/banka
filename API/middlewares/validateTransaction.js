@@ -15,12 +15,10 @@ class ValidateTransaction {
       const { accountNumber } = req.params;
       const userAccount = await selectWithClause('accounts', 'accountnumber', accountNumber);
       if (userAccount.length <= 0) {
-        console.log('hello1');
         res.status(404).json({ status: 404, message: 'Account not found' });
         return;
       }
       req.data = { userAccount };
-    //   console.log('reeue', req.data);
       next();
     } catch (err) {
       res.status(400).json({ status: 400, error: err });

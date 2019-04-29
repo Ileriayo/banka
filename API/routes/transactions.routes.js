@@ -14,6 +14,7 @@ const transactionRouter = express.Router();
 // transactionRouter.get('/:accountNumber/transactions', aunthenticate.client, transactionDBController.viewAllTransactions);
 transactionRouter.get('/:transactionId', aunthenticate.client, transactionDBController.viewOneTransaction);
 transactionRouter.post('/:accountNumber/debit', validateTransactionInput, validateTransaction, transactionDBController.debitAccount);
+transactionRouter.post('/:accountNumber/credit', validateTransactionInput, validateTransaction, transactionDBController.creditAccount);
 
 // Dummy DB
 // transactionRouter.get('/', aunthenticate.client, transactionController.viewTransactions);

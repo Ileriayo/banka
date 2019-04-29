@@ -58,6 +58,43 @@ class transactionController {
       },
     });
   }
+
+  static async creditAccount(req, res) {
+    const { debitAmount, transactionType } = req.body;
+    if (transactionType !== 'credit') {
+      res.status(400).json({ status: 400, error: 'Not a credit transaction' });
+      return;
+    }
+    const { id, balance } = req.data.userAccount[0];
+    // if (balance < debitAmount) {
+    //   res.status(400).json({ status: 400, error: 'Balance is not enough' });
+    //   return;
+    // }
+    const newBalance = balance + debitAmount;
+
+    const updateBalance = `UPDATE accounts SET balance = $1
+                           WHERE accountnumber = $2`;
+    const newTransaction = `INSERT INTO transactions(type, accountnumber, createdon, cashier, amount, oldbalance, newbalance)
+                            VALUES($1, $2, $3, $4, $5, $6, $7) RETURNING *`;
+
+    const { accountNumber } = req.params;
+    await query(updateBalance, [newBalance, accountNumber]);
+    const transactionResult = await query(newTransaction,
+      [transactionType, accountNumber, new Date(), id, debitAmount, balance, newBalance]);
+
+    const transactionId = transactionResult.rows[0].id;
+
+    res.status(200).json({
+      status: 200,
+      data: {
+        transactionId,
+        accountNumber,
+        debitAmount,
+        transactionType,
+        accountBalance: newBalance,
+      },
+    });
+  }
 }
 
 export default transactionController;
