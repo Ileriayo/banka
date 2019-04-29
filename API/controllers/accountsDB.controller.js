@@ -1,6 +1,9 @@
+import { validationResult } from 'express-validator/check';
 import Query from '../db/db';
+import CheckEmail from '../Helper/checkEmail';
 
 const { query } = Query;
+const { checkEmail } = CheckEmail;
 
 class AccountController {
   static async viewAllAccounts(req, res) {
@@ -35,7 +38,6 @@ class AccountController {
 
   static async viewAccountDetails(req, res) {
     const { accountNumber } = req.params;
-
     const getAccountDetails = `SELECT createdon, accountnumber, users.email, users.id, accounts.type, status, balance FROM accounts
                                INNER JOIN users
                                ON accounts.owner = users.id
@@ -47,6 +49,51 @@ class AccountController {
       return res.status(400).json({ Status: 400, Error: err });
     }
   }
+
+  static async createBankAccount(req, res) {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ status: 400, errors: errors.array() });
+    }
+    const queryString = `INSERT INTO accounts(accountnumber, owner, type)
+                        VALUES($1, $2, $3) RETURNING *`;
+    const accountNumber = Math.floor(Math.random() * 900000);
+    const { type } = req.body;
+
+    await query(
+      queryString,
+      [accountNumber, req.data[0].id, type],
+    );
+
+    const { firstName, lastName, email } = req.data[0];
+
+    return res.status(201).json({
+      status: 201,
+      message: 'Account created successfully',
+      data: {
+        accountNumber, firstName, lastName, email, type, openingBalance: 0.00,
+      },
+    });
+  }
+
+
+  //   const newAccount = {};
+  //   newAccount.type = req.body.type;
+  //   newAccount.balance = 0.00;
+  //   newAccount.status = 'active';
+  //   newAccount.creaatedOn = new Date();
+  //   newAccount.owner = 1;
+  //   newAccount.id = allAccounts.length + 1;
+  //   if (newAccount.type === null) {
+  //     res.status(400).json({ status: 400, error: 'Bad request' });
+  //     return;
+  //   }
+  //   allAccounts.push(newAccount);
+  //   res.status(201).json({
+  //     status: 201,
+  //     data: allAccounts.filter(account => account.id === allAccounts.length - 1),
+  //   });
+  // }
 }
 
 export default AccountController;
@@ -75,25 +122,6 @@ export default AccountController;
 //     res.status(200).json({ status: 200, data: userAccount });
 //   }
 
-//   static createBankAccount(req, res) {
-//     const newAccount = {};
-//     newAccount.type = req.body.type;
-//     newAccount.balance = 0.00;
-//     newAccount.status = 'active';
-//     newAccount.creaatedOn = new Date();
-//     newAccount.accountNumber = Math.floor(Math.random() * 9000000000) + 1000000000;
-//     newAccount.owner = 1;
-//     newAccount.id = allAccounts.length + 1;
-//     if (newAccount.type === null) {
-//       res.status(400).json({ status: 400, error: 'Bad request' });
-//       return;
-//     }
-//     allAccounts.push(newAccount);
-//     res.status(201).json({
-//       status: 201,
-//       data: allAccounts.filter(account => account.id === allAccounts.length - 1),
-//     });
-//   }
 
 //   static changeStatus(req, res) {
 //     const { accountNumber } = req.params;
