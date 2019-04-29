@@ -1,8 +1,10 @@
 import { validationResult } from 'express-validator/check';
 import Query from '../db/db';
 import CheckEmail from '../Helper/checkEmail';
+import SelectWithClause from '../Helper/selectWithClause';
 
 const { query } = Query;
+const { selectWithClause } = SelectWithClause;
 const { checkEmail } = CheckEmail;
 
 class AccountController {
@@ -76,40 +78,22 @@ class AccountController {
     });
   }
 
-
-  //   const newAccount = {};
-  //   newAccount.type = req.body.type;
-  //   newAccount.balance = 0.00;
-  //   newAccount.status = 'active';
-  //   newAccount.creaatedOn = new Date();
-  //   newAccount.owner = 1;
-  //   newAccount.id = allAccounts.length + 1;
-  //   if (newAccount.type === null) {
-  //     res.status(400).json({ status: 400, error: 'Bad request' });
-  //     return;
-  //   }
-  //   allAccounts.push(newAccount);
-  //   res.status(201).json({
-  //     status: 201,
-  //     data: allAccounts.filter(account => account.id === allAccounts.length - 1),
-  //   });
-  // }
+  static async deleteAccount(req, res) {
+    let { accountNumber } = req.params;
+    accountNumber = Number(accountNumber);
+    const userAccount = await selectWithClause('accounts', 'accountnumber', accountNumber);
+    if (userAccount.length <= 0) {
+      res.status(404).json({ status: 404, message: 'Account not found' });
+      return;
+    }
+    const queryString = 'DELETE FROM accounts WHERE accountnumber = $1';
+    await query(queryString, [accountNumber]);
+    res.status(200).json({ status: 200, message: 'Account successfully deleted' });
+  }
 }
 
 export default AccountController;
 
-//   static deleteAccount(req, res) {
-//     const { accountNumber } = req.params;
-//     const userAccount = allAccounts
-//       .find(account => account.accountNumber === Number(accountNumber));
-//     if (!userAccount) {
-//       res.status(404).json({ status: 404, message: 'Account not found' });
-//       return;
-//     }
-//     const account = allAccounts.findIndex(acc => acc.accountNumber === Number(accountNumber));
-//     allAccounts.splice(account, 1);
-//     res.status(200).json({ status: 200, message: 'Account successfully deleted' });
-//   }
 
 //   static viewAccount(req, res) {
 //     const { accountNumber } = req.params;

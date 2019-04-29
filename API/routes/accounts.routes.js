@@ -15,7 +15,7 @@ accountRouter.get('/', aunthenticate.client, aunthenticate.staff, CheckReqQuery.
 accountRouter.post('/', aunthenticate.client, validateNewAccount, accountController.createBankAccount);
 
 // accountRouter.post('/', aunthenticate.client, accountController.createBankAccount);
-// accountRouter.delete('/:accountNumber', aunthenticate.client, aunthenticate.staff, accountController.deleteAccount);
+accountRouter.delete('/:accountNumber', accountController.deleteAccount);
 // accountRouter.get('/:accountNumber', aunthenticate.client, accountController.viewAccount);
 // accountRouter.patch('/:accountNumber', aunthenticate.client, aunthenticate.staff, accountController.changeStatus);
 
