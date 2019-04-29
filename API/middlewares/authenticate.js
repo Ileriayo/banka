@@ -16,8 +16,6 @@ class Authenticate {
       const token = req.headers.authorization.split(' ')[1];
       const decoded = await decodeToken(token);
       req.data = await userFromToken(decoded);
-      // console.log(req.data);
-      
       return next();
     } catch (err) {
       return res.status(401).json({
@@ -29,8 +27,6 @@ class Authenticate {
 
   static async staff(req, res, next) {
     if (req.data[0].type !== 'staff') {
-      // console.log('Hererererererererer', req.data[0].type);
-      
       return res.status(401).json({
         status: 401,
         error: 'Must be a Staff',

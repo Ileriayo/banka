@@ -79,64 +79,34 @@ class AccountController {
   }
 
   static async deleteAccount(req, res) {
-    let { accountNumber } = req.params;
-    accountNumber = Number(accountNumber);
+    const { accountNumber } = req.params;
     const userAccount = await selectWithClause('accounts', 'accountnumber', accountNumber);
     if (userAccount.length <= 0) {
-      res.status(404).json({ status: 404, message: 'Account not found' });
-      return;
+      return res.status(404).json({ status: 404, message: 'Account not found' });
     }
     const queryString = 'DELETE FROM accounts WHERE accountnumber = $1';
     await query(queryString, [accountNumber]);
-    res.status(200).json({ status: 200, message: 'Account successfully deleted' });
+    return res.status(200).json({ status: 200, message: 'Account successfully deleted' });
+  }
+
+  static async changeStatus(req, res) {
+    const { accountNumber } = req.params;
+    const userAccount = await selectWithClause('accounts', 'accountnumber', accountNumber);
+    if (userAccount.length <= 0) {
+      return res.status(404).json({ status: 404, message: 'Account not found' });
+    }
+    let { status } = userAccount[0];
+    if (status === 'active') {
+      status = 'dormant';
+    } else status = 'active';
+    const queryString = 'UPDATE accounts SET status = $1 where accountnumber = $2';
+    await query(queryString, [status, accountNumber]);
+    return res.status(200).json({
+      status: 200,
+      message: 'Account status updated',
+      data: { AccountNumber: accountNumber, status },
+    });
   }
 }
 
 export default AccountController;
-
-
-//   static viewAccount(req, res) {
-//     const { accountNumber } = req.params;
-//     const userAccount = allAccounts
-//       .filter(account => account.accountNumber === Number(accountNumber));
-//     if (userAccount.length <= 0) {
-//       res.status(404).json({ status: 404, message: 'Account not found' });
-//       return;
-//     }
-//     res.status(200).json({ status: 200, data: userAccount });
-//   }
-
-
-//   static changeStatus(req, res) {
-//     const { accountNumber } = req.params;
-//     const userAccount = allAccounts.filter(acc => acc.accountNumber === Number(accountNumber));
-//     if (userAccount <= 0) {
-//       res.status(404).json({ status: 404, message: 'No account found' });
-//       return;
-//     }
-//     if (userAccount[0].status === 'active') {
-//       userAccount.status = 'dormant';
-//       res.status(200).json({
-//         status: 200,
-//         message: 'Account status updated',
-//         data: {
-//           AccountNumber: accountNumber,
-//           status: userAccount.status,
-//         },
-//       });
-//     }
-//     if (userAccount[0].status === 'dormant') {
-//       userAccount.status = 'active';
-//       res.status(200).json({
-//         status: 200,
-//         message: 'Account status updated',
-//         data: {
-//           AccountNumber: accountNumber,
-//           status: userAccount.status,
-//         },
-//       });
-//     }
-//   }
-// }
-
-// export default accountController;
