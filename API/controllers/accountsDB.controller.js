@@ -1,6 +1,11 @@
+import { validationResult } from 'express-validator/check';
 import Query from '../db/db';
+import CheckEmail from '../Helper/checkEmail';
+import SelectWithClause from '../Helper/selectWithClause';
 
 const { query } = Query;
+const { selectWithClause } = SelectWithClause;
+const { checkEmail } = CheckEmail;
 
 class AccountController {
   static async viewAllAccounts(req, res) {
@@ -35,7 +40,6 @@ class AccountController {
 
   static async viewAccountDetails(req, res) {
     const { accountNumber } = req.params;
-
     const getAccountDetails = `SELECT createdon, accountnumber, users.email, users.id, accounts.type, status, balance FROM accounts
                                INNER JOIN users
                                ON accounts.owner = users.id
@@ -47,84 +51,63 @@ class AccountController {
       return res.status(400).json({ Status: 400, Error: err });
     }
   }
+
+  static async createBankAccount(req, res) {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ status: 400, errors: errors.array() });
+    }
+    const queryString = `INSERT INTO accounts(accountnumber, owner, type)
+                        VALUES($1, $2, $3) RETURNING *`;
+    const accountNumber = Math.floor(Math.random() * 900000);
+    const { type } = req.body;
+
+    await query(
+      queryString,
+      [accountNumber, req.data[0].id, type],
+    );
+
+    const { firstName, lastName, email } = req.data[0];
+
+    return res.status(201).json({
+      status: 201,
+      message: 'Account created successfully',
+      data: {
+        accountNumber, firstName, lastName, email, type, openingBalance: 0.00,
+      },
+    });
+  }
+
+  static async deleteAccount(req, res) {
+    const { accountNumber } = req.params;
+    const userAccount = await selectWithClause('accounts', 'accountnumber', accountNumber);
+    if (userAccount.length <= 0) {
+      return res.status(404).json({ status: 404, message: 'Account not found' });
+    }
+    const queryString = 'DELETE FROM accounts WHERE accountnumber = $1';
+    await query(queryString, [accountNumber]);
+    return res.status(200).json({ status: 200, message: 'Account successfully deleted' });
+  }
+
+  static async changeStatus(req, res) {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ status: 400, errors: errors.array() });
+    }
+    const { accountNumber } = req.params;
+    const userAccount = await selectWithClause('accounts', 'accountnumber', accountNumber);
+    if (userAccount.length <= 0) {
+      return res.status(404).json({ status: 404, message: 'Account not found' });
+    }
+    const { status } = req.body;
+    const queryString = 'UPDATE accounts SET status = $1 where accountnumber = $2';
+    await query(queryString, [status, accountNumber]);
+    return res.status(200).json({
+      status: 200,
+      message: 'Account status updated',
+      data: { AccountNumber: accountNumber, status },
+    });
+  }
 }
 
 export default AccountController;
-
-//   static deleteAccount(req, res) {
-//     const { accountNumber } = req.params;
-//     const userAccount = allAccounts
-//       .find(account => account.accountNumber === Number(accountNumber));
-//     if (!userAccount) {
-//       res.status(404).json({ status: 404, message: 'Account not found' });
-//       return;
-//     }
-//     const account = allAccounts.findIndex(acc => acc.accountNumber === Number(accountNumber));
-//     allAccounts.splice(account, 1);
-//     res.status(200).json({ status: 200, message: 'Account successfully deleted' });
-//   }
-
-//   static viewAccount(req, res) {
-//     const { accountNumber } = req.params;
-//     const userAccount = allAccounts
-//       .filter(account => account.accountNumber === Number(accountNumber));
-//     if (userAccount.length <= 0) {
-//       res.status(404).json({ status: 404, message: 'Account not found' });
-//       return;
-//     }
-//     res.status(200).json({ status: 200, data: userAccount });
-//   }
-
-//   static createBankAccount(req, res) {
-//     const newAccount = {};
-//     newAccount.type = req.body.type;
-//     newAccount.balance = 0.00;
-//     newAccount.status = 'active';
-//     newAccount.creaatedOn = new Date();
-//     newAccount.accountNumber = Math.floor(Math.random() * 9000000000) + 1000000000;
-//     newAccount.owner = 1;
-//     newAccount.id = allAccounts.length + 1;
-//     if (newAccount.type === null) {
-//       res.status(400).json({ status: 400, error: 'Bad request' });
-//       return;
-//     }
-//     allAccounts.push(newAccount);
-//     res.status(201).json({
-//       status: 201,
-//       data: allAccounts.filter(account => account.id === allAccounts.length - 1),
-//     });
-//   }
-
-//   static changeStatus(req, res) {
-//     const { accountNumber } = req.params;
-//     const userAccount = allAccounts.filter(acc => acc.accountNumber === Number(accountNumber));
-//     if (userAccount <= 0) {
-//       res.status(404).json({ status: 404, message: 'No account found' });
-//       return;
-//     }
-//     if (userAccount[0].status === 'active') {
-//       userAccount.status = 'dormant';
-//       res.status(200).json({
-//         status: 200,
-//         message: 'Account status updated',
-//         data: {
-//           AccountNumber: accountNumber,
-//           status: userAccount.status,
-//         },
-//       });
-//     }
-//     if (userAccount[0].status === 'dormant') {
-//       userAccount.status = 'active';
-//       res.status(200).json({
-//         status: 200,
-//         message: 'Account status updated',
-//         data: {
-//           AccountNumber: accountNumber,
-//           status: userAccount.status,
-//         },
-//       });
-//     }
-//   }
-// }
-
-// export default accountController;
