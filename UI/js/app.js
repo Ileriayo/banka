@@ -1,3 +1,15 @@
+/* HAMBURGER */
+const hamburger = document.querySelector('.hamburger');
+const menuList = document.querySelector('.navbar__menu-lsit');
+hamburger.addEventListener('click', () => {
+    if (menuList.style.display === "block") {
+        menuList.style.display = "none";
+    } else {
+        menuList.style.display = "block";
+    }
+})
+/* END HAMBURGER */
+
 /* MODAL FOR VIEWING TRANSACTIONS */
 const btnViewTransaction = document.querySelectorAll('.transaction__item__view ');
 
