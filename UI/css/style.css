@@ -212,6 +212,29 @@ select:focus {
     }
 }
 
+.navbar__menu-lsit {
+    display: none;
+}
+
+.navbar__menu-lsit ul{
+    padding-inline-start: 0;
+}
+
+.navbar__menu-lsit li{
+    text-align: center;
+    padding: 8px 0;
+    transition: .7s;
+}
+
+.navbar__menu-lsit li:hover{
+    background: #6C63FF;
+}
+
+.navbar__menu-lsit a{
+    padding: 0 40%;
+    color: #fff;
+}
+
 #toggle svg {
     height: 1.2em;
     width: 1.2em;
